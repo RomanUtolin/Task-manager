@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+{% load i18n %}
+<html lang="en-us">
+  <head>
+    {% load bootstrap4 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript jquery='full' %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>{% trans 'Task manager Hexlet' %}</title>
+  </head>
+  <body class="d-flex flex-column min-vh-100">
+    {% include "navigation.html" %}
+    <div class="container wrapper flex-grow-1">
+    {% if messages %}
+      {% for message in messages %}
+      <div>{% bootstrap_messages message %}</div>
+      {% endfor %}
+    {% endif %}
+    {% block content %}{% endblock %}
+    </div>
+    <footer>
+    {% include "footer.html" %}
+    </footer>
+  </body>
+</html>
