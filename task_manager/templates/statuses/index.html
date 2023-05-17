@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block content %}
+<h1 class="my-4">Статусы</h1>
+<a class="nav-link" href="{% url 'create_status' %}">Создать статус</a>
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Имя</th>
+        <th>Дата создания</th>
+        <th></th>
+    </tr>
+    </thead>
+    {% for status in statuses %}
+    <tbody>
+    <tr>
+        <td>{{ status.pk }}</td>
+        <td>{{ status.name }}</td>
+        <td>{{ status.created_at|date:"d.m.Y H:i" }}</td>
+        <td>
+            <a href="{% url 'update_status' status.pk %}">Изменить</a>
+            <br>
+            <a href="{% url 'delete_status' status.pk %}">Удалить</a>
+        </td>
+    </tr>
+    </tbody>
+    {% endfor %}
+</table>
+{% endblock %}
