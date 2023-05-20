@@ -1,6 +1,7 @@
 from django.db import models
 from task_manager.users.models import User
 from task_manager.statuses.models import Status
+from task_manager.labels.models import Label
 from django.utils.translation import gettext as _
 
 
@@ -11,7 +12,13 @@ class Task(models.Model):
     executor = models.ForeignKey(User, blank=True, on_delete=models.PROTECT, verbose_name=_('Executor'),
                                  related_name='executor')
     autor = models.ForeignKey(User, on_delete=models.PROTECT, related_name='autor')
+    labels = models.ManyToManyField(Label, blank=True, through="TaskLabels")
     created_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.name
+
+
+class TaskLabels(models.Model):
+    task = models.ForeignKey(Task, on_delete=models.CASCADE)
+    labels = models.ForeignKey(Label, on_delete=models.PROTECT)

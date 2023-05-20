@@ -1,7 +1,7 @@
 from django.shortcuts import redirect
 from django.contrib import messages
 from django.urls import reverse_lazy
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.utils.translation import gettext as _
 from task_manager.tasks.forms import TaskCreation
@@ -67,10 +67,9 @@ class DeleteTaskPage(LoginRequiredMixin, DeleteView):
         return super().dispatch(request, *args, **kwargs)
 
 
-class OpenTaskPage(LoginRequiredMixin, ListView):
+class OpenTaskPage(LoginRequiredMixin, DetailView):
     template_name = "tasks/open_task.html"
     model = Task
-    context_object_name = 'tasks'
 
     def dispatch(self, request, *args, **kwargs):
         if not request.user.is_authenticated:
