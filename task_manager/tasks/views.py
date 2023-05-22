@@ -1,78 +1,42 @@
-from django.shortcuts import redirect
-from django.contrib import messages
-from django.urls import reverse_lazy
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic import CreateView, UpdateView, DeleteView, DetailView
 from django.utils.translation import gettext as _
+from django_filters.views import FilterView
 from task_manager.tasks.forms import TaskCreation
 from task_manager.tasks.models import Task
+from task_manager.tasks.filter import TaskFilter
+from task_manager.mixins import TaskPassesMixin, EditDeletePassesMixin
 
 
-class TasksPage(LoginRequiredMixin, ListView):
+class TasksPage(TaskPassesMixin, FilterView):
     template_name = "tasks/index.html"
-    model = Task
     context_object_name = 'tasks'
-
-    def dispatch(self, request, *args, **kwargs):
-        if not request.user.is_authenticated:
-            messages.error(self.request, _('You are not authorized! Please sign in.'))
-            return redirect('login_page')
-        return super().dispatch(request, *args, **kwargs)
+    filterset_class = TaskFilter
 
 
-class CreateTaskPage(LoginRequiredMixin, CreateView):
-    template_name = "tasks/create_task.html"
+class CreateTaskPage(TaskPassesMixin, CreateView):
     form_class = TaskCreation
+    template_name = "tasks/create_task.html"
+    success_message = _('Task created successfully')
 
     def form_valid(self, form):
         form.instance.autor = self.request.user
         return super().form_valid(form)
 
-    def get_success_url(self):
-        messages.success(self.request, _('Task created successfully'))
-        return reverse_lazy('tasks_page')
 
-
-class UpdateTaskPage(LoginRequiredMixin, UpdateView):
+class UpdateTaskPage(TaskPassesMixin, UpdateView):
     model = Task
     template_name = "tasks/update_task.html"
     form_class = TaskCreation
-
-    def get_success_url(self):
-        messages.success(self.request, _('Task changed successfully'))
-        return reverse_lazy('tasks_page')
-
-    def dispatch(self, request, *args, **kwargs):
-        if not request.user.is_authenticated:
-            messages.error(self.request, _('You are not authorized! Please sign in.'))
-            return redirect('login_page')
-        return super().dispatch(request, *args, **kwargs)
+    success_message = _('Task changed successfully')
 
 
-class DeleteTaskPage(LoginRequiredMixin, DeleteView):
+class DeleteTaskPage(TaskPassesMixin, EditDeletePassesMixin, DeleteView):
     model = Task
     template_name = "tasks/delete_task.html"
-
-    def get_success_url(self):
-        messages.success(self.request, _('Task deleted successfully'))
-        return reverse_lazy('tasks_page')
-
-    def dispatch(self, request, *args, **kwargs):
-        if not request.user.is_authenticated:
-            messages.error(self.request, _('You are not authorized! Please sign in.'))
-            return redirect('login_page')
-        if not self.get_object().autor == self.request.user:
-            messages.error(self.request, _('A task can only be deleted by its author.'))
-            return redirect('tasks_page')
-        return super().dispatch(request, *args, **kwargs)
+    success_message = _('Task deleted successfully')
+    permission_denied_message = _('A task can only be deleted by its author.')
 
 
-class OpenTaskPage(LoginRequiredMixin, DetailView):
-    template_name = "tasks/open_task.html"
+class OpenTaskPage(DetailView):
     model = Task
-
-    def dispatch(self, request, *args, **kwargs):
-        if not request.user.is_authenticated:
-            messages.error(self.request, _('You are not authorized! Please sign in.'))
-            return redirect('login_page')
-        return super().dispatch(request, *args, **kwargs)
+    template_name = "tasks/open_task.html"
