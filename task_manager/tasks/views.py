@@ -15,8 +15,10 @@ class TasksPage(TaskPassesMixin, FilterView):
 
 class CreateTaskPage(TaskPassesMixin, CreateView):
     form_class = TaskCreation
-    template_name = "tasks/create_task.html"
+    template_name = 'form.html'
     success_message = _('Task created successfully')
+    context = {'header': _('Create task'), 'button': _('Create')}
+    extra_context = context
 
     def form_valid(self, form):
         form.instance.autor = self.request.user
@@ -25,16 +27,20 @@ class CreateTaskPage(TaskPassesMixin, CreateView):
 
 class UpdateTaskPage(TaskPassesMixin, UpdateView):
     model = Task
-    template_name = "tasks/update_task.html"
+    template_name = 'form.html'
     form_class = TaskCreation
     success_message = _('Task changed successfully')
+    context = {'header': _('Edit task'), 'button': _('Edit')}
+    extra_context = context
 
 
 class DeleteTaskPage(TaskPassesMixin, EditDeletePassesMixin, DeleteView):
     model = Task
-    template_name = "tasks/delete_task.html"
+    template_name = "delete_form.html"
     success_message = _('Task deleted successfully')
     permission_denied_message = _('A task can only be deleted by its author.')
+    context = {'header': 'Deleting a task'}
+    extra_context = context
 
 
 class OpenTaskPage(DetailView):

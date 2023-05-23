@@ -34,8 +34,11 @@ class PassesMixin(SuccessMessageMixin, LoginRequiredMixin):
 class EditDeletePassesMixin(PassesMixin):
 
     def dispatch(self, request, *args, **kwargs):
-        user = self.get_object()
-        if not self.request.user == user and self.request.user.is_authenticated:
+        try:
+            user = self.get_object().autor.username
+        except AttributeError:
+            user = self.get_object().username
+        if not self.request.user.username == user:
             return self.handle_no_permission()
         return super().dispatch(request, *args, **kwargs)
 

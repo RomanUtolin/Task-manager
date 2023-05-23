@@ -12,11 +12,11 @@ class IndexPage(TemplateView):
 
 class LoginPage(SuccessMessageMixin, LoginView):
     success_message = _('You are logged in')
-    template_name = "login.html"
+    template_name = "form.html"
     redirect_authenticated_user = reverse_lazy('index')
-
-    def get_success_url(self):
-        return reverse_lazy('index')
+    next_page = reverse_lazy('index')
+    context = {'header': _('Entrance'), 'button': _('Log in')}
+    extra_context = context
 
 
 class Logout(LogoutView):

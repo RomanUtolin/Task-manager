@@ -13,19 +13,25 @@ class LabelsPage(LabelPassesMixin, ListView):
 
 class CreateLabelPage(LabelPassesMixin, CreateView):
     form_class = LabelCreation
-    template_name = "labels/create_label.html"
+    template_name = "form.html"
     success_message = _('Label created successfully')
+    context = {'header': _('Create label'), 'button': _('Create')}
+    extra_context = context
 
 
 class UpdateLabelPage(LabelPassesMixin, UpdateView):
     model = Label
     form_class = LabelCreation
-    template_name = "labels/update_label.html"
+    template_name = "form.html"
     success_message = _('label changed successfully')
+    context = {'header': _('Edit label'), 'button': _('Edit')}
+    extra_context = context
 
 
 class DeleteLabelPage(LabelPassesMixin, DeleteView):
     model = Label
-    template_name = "labels/delete_label.html"
+    template_name = "delete_form.html"
     success_message = _('Label deleted successfully')
     permission_delete_message = _("Can't delete label because it's in use")
+    context = {'header': 'Deleting a label'}
+    extra_context = context
