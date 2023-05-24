@@ -20,3 +20,6 @@ comp_trans:
 
 shell:
 	poetry run python manage.py shell
+
+static:
+	poetry run python manage.py collectstatic
