@@ -1,5 +1,5 @@
 from django.views.generic import CreateView, UpdateView, DeleteView, DetailView
-from django.utils.translation import gettext as _
+from django.utils.translation import gettext_lazy as _
 from django_filters.views import FilterView
 from task_manager.tasks.forms import TaskCreation
 from task_manager.tasks.models import Task
@@ -39,7 +39,7 @@ class DeleteTaskPage(TaskPassesMixin, EditDeletePassesMixin, DeleteView):
     template_name = "delete_form.html"
     success_message = _('Task deleted successfully')
     permission_denied_message = _('A task can only be deleted by its author.')
-    context = {'header': 'Deleting a task'}
+    context = {'header': _('Deleting a task')}
     extra_context = context
 
 

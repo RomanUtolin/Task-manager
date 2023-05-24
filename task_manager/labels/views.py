@@ -1,5 +1,5 @@
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
-from django.utils.translation import gettext as _
+from django.utils.translation import gettext_lazy as _
 from task_manager.labels.forms import LabelCreation
 from task_manager.labels.models import Label
 from task_manager.mixins import LabelPassesMixin
@@ -33,5 +33,5 @@ class DeleteLabelPage(LabelPassesMixin, DeleteView):
     template_name = "delete_form.html"
     success_message = _('Label deleted successfully')
     permission_delete_message = _("Can't delete label because it's in use")
-    context = {'header': 'Deleting a label'}
+    context = {'header': _('Deleting a label')}
     extra_context = context

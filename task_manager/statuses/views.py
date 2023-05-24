@@ -1,4 +1,4 @@
-from django.utils.translation import gettext as _
+from django.utils.translation import gettext_lazy as _
 from django.views.generic import CreateView, UpdateView, DeleteView, ListView
 from task_manager.statuses.models import Status
 from task_manager.statuses.forms import StatusCreation
@@ -33,6 +33,6 @@ class DeleteStatusPage(StatusPassesMixin, DeleteView):
     template_name = "delete_form.html"
     success_message = _('Status deleted successfully')
     permission_delete_message = _("Can't delete status because it's in use")
-    context = {'header': 'Deleting a status'}
+    context = {'header': _('Deleting a status')}
     extra_context = context
 

@@ -1,5 +1,6 @@
+from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse_lazy
-from django.utils.translation import gettext as _
+from django.utils.translation import gettext_lazy as _
 from django.views.generic import CreateView, UpdateView, DeleteView, ListView
 from task_manager.mixins import EditDeletePassesMixin, UserPassesMixin
 from task_manager.users.models import User
@@ -12,7 +13,7 @@ class UsersPage(ListView):
     context_object_name = 'users'
 
 
-class CreateUserPage(CreateView):
+class CreateUserPage(SuccessMessageMixin, CreateView):
     template_name = "form.html"
     form_class = UserCreation
     success_message = _('User successfully registered')
@@ -37,5 +38,5 @@ class DeleteUserPage(UserPassesMixin, EditDeletePassesMixin, DeleteView):
     success_url = reverse_lazy('index')
     success_message = _('User deleted successfully')
     permission_delete_message = _('Cannot delete user because it is in use')
-    context = {'header': 'Deleting a user'}
+    context = {'header': _('Deleting a user')}
     extra_context = context
