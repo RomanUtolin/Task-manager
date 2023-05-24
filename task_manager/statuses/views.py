@@ -35,4 +35,3 @@ class DeleteStatusPage(StatusPassesMixin, DeleteView):
     permission_delete_message = _("Can't delete status because it's in use")
     context = {'header': _('Deleting a status')}
     extra_context = context
-
