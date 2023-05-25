@@ -1,0 +1,30 @@
+[
+  {
+    "model": "tasks.task",
+    "pk": 1,
+    "fields": {
+      "name": "Django",
+      "autor": 2,
+      "executor": 2,
+      "description": "Test_Django",
+      "status": 1,
+      "created_at": "2023-05-25 19:34:16.920013"
+    }
+  },
+  {
+    "model": "tasks.tasklabels",
+    "pk": 1,
+    "fields": {
+      "task": 1,
+      "labels": 1
+    }
+  },
+  {
+    "model": "tasks.tasklabels",
+    "pk": 2,
+    "fields": {
+      "task": 1,
+      "labels": 2
+    }
+  }
+]

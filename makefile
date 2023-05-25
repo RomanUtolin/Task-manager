@@ -23,3 +23,6 @@ shell:
 
 static:
 	poetry run python manage.py collectstatic
+
+test:
+	poetry run python3 manage.py test ./task_manager/tests/

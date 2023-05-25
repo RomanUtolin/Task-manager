@@ -1,0 +1,24 @@
+[
+  {
+    "model": "users.user",
+    "pk": 1,
+    "fields": {
+      "password": "pbkdf2_sha256$600000$32Hw7mSq92TGPsGPSHQQoD$/zW9mXnAVPxHTpZXIqOVsJg703ftz+FF4wicE9BcyCA=",
+      "username": "User_1",
+      "date_joined": "2023-05-25 19:12:13.729913",
+      "first_name": "Dmitry",
+      "last_name": "Ivanov"
+    }
+  },
+  {
+    "model": "users.user",
+    "pk": 2,
+    "fields": {
+      "password": "pbkdf2_sha256$600000$5APoSDuhwTtQrsgRdNha3d$QHSMkuOhWD4/XMAEsDTegkxqP7hisogsZ/0TR45VMTE=",
+      "username": "User_2",
+      "date_joined": "2023-05-25 19:13:39.021632",
+      "first_name": "Oleg",
+      "last_name": "Petrov"
+    }
+  }
+]
