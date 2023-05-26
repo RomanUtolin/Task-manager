@@ -15,6 +15,13 @@ class UserTestCase(MixinTestCase):
         self.user.force_login(User.objects.get(pk=1))
         self.user_2.force_login(User.objects.get(pk=2))
 
+    def test_user_list(self):
+        url = reverse_lazy('users_page')
+        get_response = self.user.get(url)
+        users = get_response.context.get('users')
+        self.assertEquals(get_response.status_code, 200)
+        self.assertEquals(len(users), 2)
+
     def test_user_create(self):
         url = reverse_lazy('create_user')
         get_response = self.user_3.get(url)

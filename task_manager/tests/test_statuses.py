@@ -14,6 +14,13 @@ class StatusesTestCase(MixinTestCase):
     def setUp(self):
         self.user.force_login(User.objects.get(pk=1))
 
+    def test_statuses_list(self):
+        url = reverse_lazy('statuses_page')
+        get_response = self.user.get(url)
+        statuses = get_response.context.get('statuses')
+        self.assertEquals(get_response.status_code, 200)
+        self.assertEquals(len(statuses), 2)
+
     def test_status_create(self):
         url = reverse_lazy('create_status')
         get_response = self.user.get(url)

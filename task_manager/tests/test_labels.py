@@ -14,6 +14,13 @@ class LabelsTestCase(MixinTestCase):
     def setUp(self):
         self.user.force_login(User.objects.get(pk=1))
 
+    def test_labels_list(self):
+        url = reverse_lazy('labels_page')
+        get_response = self.user.get(url)
+        labels = get_response.context.get('labels')
+        self.assertEquals(get_response.status_code, 200)
+        self.assertEquals(len(labels), 2)
+
     def test_label_create(self):
         url = reverse_lazy('create_label')
         get_response = self.user.get(url)

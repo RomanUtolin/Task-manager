@@ -17,6 +17,13 @@ class TasksTestCase(MixinTestCase):
         self.user.force_login(User.objects.get(pk=1))
         self.user_2.force_login(User.objects.get(pk=2))
 
+    def test_tasks_list(self):
+        url = reverse_lazy('tasks_page')
+        get_response = self.user.get(url)
+        tasks = get_response.context.get('tasks')
+        self.assertEquals(get_response.status_code, 200)
+        self.assertEquals(len(tasks), 1)
+
     def test_task_open(self):
         url = reverse_lazy('open_task', args=(1,))
         get_response = self.user_2.get(url)
