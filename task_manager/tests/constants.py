@@ -16,7 +16,7 @@ UPDATE_USER = {
 
 TASK = {
     "name": "Task",
-    "description": "Desc Task",
+    "description": "description Task",
     "status": 1,
     "executor": 1,
     "labels": 1
@@ -24,7 +24,7 @@ TASK = {
 
 UPDATE_TASK = {
     "name": "Update Task",
-    "description": "Update Desc Task",
+    "description": "Update description Task",
     "status": 2,
     "executor": 2,
     "labels": 2

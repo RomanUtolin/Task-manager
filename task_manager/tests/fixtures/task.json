@@ -18,13 +18,5 @@
       "task": 1,
       "labels": 1
     }
-  },
-  {
-    "model": "tasks.tasklabels",
-    "pk": 2,
-    "fields": {
-      "task": 1,
-      "labels": 2
-    }
   }
 ]
