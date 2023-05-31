@@ -2,7 +2,7 @@
 {% load i18n %}
 {% block content %}
 <h1 class="my-4">{{ header }}</h1>
-<p>{% trans "Are you sure you want to delete" %} {{ object.name }}{% if object.username %} {{ object.username }} {{ object.last_name }}{% endif %}??</p>
+<p>{% trans "Are you sure you want to delete" %} {{ object.name }}{% if object.username %} {{ object }}{% endif %}?</p>
 <form method="post">
     {% csrf_token %}
     <button class="btn btn-danger" type="submit">{% trans "Yes, delete" %}</button>
