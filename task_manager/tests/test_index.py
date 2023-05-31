@@ -35,7 +35,7 @@ class IndexTestCase(TestCase):
 
     def test_logout(self):
         url = reverse_lazy('logout')
-        self.user.force_login(User.objects.get(pk=1))
+        self.user.force_login(User.objects.get(username='test_user'))
         get_response = self.user.get(url)
         message = 'You are logged out'
         self.assertEquals(get_response.status_code, 302)

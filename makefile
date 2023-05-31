@@ -27,5 +27,7 @@ static:
 test:
 	poetry run python3 manage.py test ./task_manager/tests/
 
-coverage:
-	poetry run coverage run --source='.' manage.py test ./task_manager/tests/
+test-coverage:
+	poetry run coverage run manage.py test ./task_manager/tests/
+	poetry run coverage report
+	poetry run coverage xml

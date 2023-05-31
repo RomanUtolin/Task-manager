@@ -18,7 +18,7 @@ class CreateUserPage(SuccessMessageMixin, CreateView):
     form_class = UserCreation
     success_message = _('User successfully registered')
     success_url = reverse_lazy('login_page')
-    context = {'header': _('Registration'), 'button': _('Registration')}
+    context = {'header': _('Registration'), 'button': _('Register')}
     extra_context = context
 
 
@@ -35,7 +35,7 @@ class UpdateUserPage(UserPassesMixin, EditDeletePassesMixin, UpdateView):
 class DeleteUserPage(UserPassesMixin, EditDeletePassesMixin, DeleteView):
     model = User
     template_name = "delete_form.html"
-    success_url = reverse_lazy('index')
+    success_url = reverse_lazy('users_page')
     success_message = _('User deleted successfully')
     permission_delete_message = _('Cannot delete user because it is in use')
     context = {'header': _('Deleting a user')}

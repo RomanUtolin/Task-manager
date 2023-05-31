@@ -24,12 +24,15 @@ load_dotenv(os.path.join(BASE_DIR, ".env"))
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.getenv('SECRET_KEY')
-
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = os.getenv('DEBUG')
-DEBUG = os.getenv('DEBUG') == 'True'
+DEBUG = os.getenv('DEBUG', False) == 'True'
 
-ALLOWED_HOSTS = ['192.168.0.171', '0.0.0.0', 'webserver', 'https://*.railway.app']
+ALLOWED_HOSTS = [
+    '192.168.0.171',
+    '0.0.0.0',
+    'webserver',
+    'python-project-52-taskmanager.up.railway.app'
+]
 
 CSRF_TRUSTED_ORIGINS = ['https://*.railway.app']
 
@@ -42,6 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'whitenoise.runserver_nostatic',
     'django_filters',
     'task_manager',
     'bootstrap4',
@@ -61,7 +65,15 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.locale.LocaleMiddleware',
+    'rollbar.contrib.django.middleware.RollbarNotifierMiddleware',
 ]
+
+ROLLBAR = {
+    'access_token': os.getenv("ROLLBAR_TOKEN"),
+    'environment': 'development' if DEBUG else 'production',
+    'code_version': '1.0',
+    'root': BASE_DIR,
+}
 
 ROOT_URLCONF = 'task_manager.urls'
 
@@ -90,12 +102,11 @@ AUTH_USER_MODEL = 'users.User'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / os.getenv('SQLITE_URL'),
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 if not DEBUG:
     DATABASES["default"] = dj_database_url.config(conn_max_age=500)
-
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
@@ -120,33 +131,37 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
-
 TIME_ZONE = 'Europe/Moscow'
 
 USE_I18N = True
 
 USE_TZ = False
 
+LANGUAGE_CODE = 'ru'
+
 LANGUAGES = (
+    ('ru', 'Russian'),
     ('en', 'English'),
-    ('ru', 'Russian')
 )
 
-LOCALE_PATHS = (
-    './locale/',
-)
+LOCALE_PATHS = [BASE_DIR / 'locale']
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
-STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static')
-STATIC_URL = 'static/'
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
-STATICFILES_DIRS = [os.path.join(PROJECT_ROOT, "staticfiles")]
+# The URL to use when referring to static files (where they will be served from)
+STATIC_URL = '/static/'
+
+# The absolute path to the directory where collectstatic will collect static files for deployment.
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+# Simplified static file serving.
+# https://warehouse.python.org/project/whitenoise/
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
 FIXTURE_DIRS = ['task_manager/tests/fixtures/']

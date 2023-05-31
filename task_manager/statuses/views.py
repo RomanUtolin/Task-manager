@@ -14,7 +14,7 @@ class StatusesPage(StatusPassesMixin, ListView):
 class CreateStatusPage(StatusPassesMixin, CreateView):
     form_class = StatusCreation
     template_name = "form.html"
-    success_message = _('Status successfully registered')
+    success_message = _('Status created successfully')
     context = {'header': _('Create status'), 'button': _('Create')}
     extra_context = context
 
