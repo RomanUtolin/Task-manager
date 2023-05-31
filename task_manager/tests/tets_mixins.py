@@ -1,9 +1,12 @@
-from django.test import TestCase
+from django import test
 from django.contrib.messages import get_messages
 from django.urls import reverse_lazy
 
 
-class MixinTestCase(TestCase):
+@test.modify_settings(MIDDLEWARE={'remove': [
+    'rollbar.contrib.django.middleware.RollbarNotifierMiddleware',
+]})
+class MixinTestCase(test.TestCase):
     fixtures = ['task.json', 'status.json', 'label.json', 'user.json']
     redirect_url = None
     login_page = reverse_lazy('login_page')

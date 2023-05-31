@@ -1,6 +1,7 @@
 from django.test import Client
 from django.core.exceptions import ObjectDoesNotExist
 from django.urls import reverse_lazy
+from django.utils.translation import gettext_lazy as _
 from task_manager.users.models import User
 from task_manager.tasks.models import Task
 from task_manager.tests.constants import TASK, UPDATE_TASK
@@ -34,7 +35,7 @@ class TasksTestCase(MixinTestCase):
         get_response = self.user.get(url)
         post_response = self.user.post(url, TASK)
         task = Task.objects.get(name='Task')
-        message = 'Task created successfully'
+        message = _('Task created successfully')
         self.get_crud_assert(get_response, post_response, message)
         self.assertTrue(task)
 
@@ -43,7 +44,7 @@ class TasksTestCase(MixinTestCase):
         get_response = self.user_2.get(url)
         post_response = self.user_2.post(url, UPDATE_TASK)
         task = Task.objects.get(name='Update Task')
-        message = 'Task changed successfully'
+        message = _('Task changed successfully')
         self.get_crud_assert(get_response, post_response, message)
         self.assertTrue(task)
 
@@ -51,7 +52,7 @@ class TasksTestCase(MixinTestCase):
         url = reverse_lazy('delete_task', args=(1,))
         get_response = self.user_2.get(url)
         post_response = self.user_2.post(url)
-        message = 'Task deleted successfully'
+        message = _('Task deleted successfully')
         self.get_crud_assert(get_response, post_response, message)
         with self.assertRaises(ObjectDoesNotExist):
             Task.objects.get(name='Django')
@@ -60,13 +61,13 @@ class TasksTestCase(MixinTestCase):
         url = reverse_lazy('delete_task', args=(1,))
         get_response = self.user.get(url)
         post_response = self.user.post(url)
-        message = 'A task can only be deleted by its author.'
+        message = _('A task can only be deleted by its author.')
         self.get_permissions_assert(get_response, post_response, message, self.redirect_url)
 
     def test_not_authorized(self):
         url = reverse_lazy('create_task')
         get_response = self.user_3.get(url)
         post_response = self.user_3.post(url, TASK)
-        message = 'You are not authorized! Please sign in.'
+        message = _('You are not authorized! Please sign in.')
         redirect_url = self.login_page
         self.get_permissions_assert(get_response, post_response, message, redirect_url)

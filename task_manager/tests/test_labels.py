@@ -1,6 +1,7 @@
 from django.test import Client
 from django.core.exceptions import ObjectDoesNotExist
 from django.urls import reverse_lazy
+from django.utils.translation import gettext_lazy as _
 from task_manager.users.models import User
 from task_manager.labels.models import Label
 from task_manager.tests.tets_mixins import MixinTestCase
@@ -26,7 +27,7 @@ class LabelsTestCase(MixinTestCase):
         get_response = self.user.get(url)
         post_response = self.user.post(url, {'name': 'test_label'})
         label = Label.objects.get(name='test_label')
-        message = 'Label created successfully'
+        message = _('Label created successfully')
         self.get_crud_assert(get_response, post_response, message)
         self.assertTrue(label)
 
@@ -35,7 +36,7 @@ class LabelsTestCase(MixinTestCase):
         get_response = self.user.get(url)
         post_response = self.user.post(url, {'name': 'Update'})
         label = Label.objects.get(name='Update')
-        message = 'label changed successfully'
+        message = _('label changed successfully')
         self.get_crud_assert(get_response, post_response, message)
         self.assertTrue(label)
 
@@ -43,7 +44,7 @@ class LabelsTestCase(MixinTestCase):
         url = reverse_lazy('delete_label', args=(2,))
         get_response = self.user.get(url)
         post_response = self.user.post(url)
-        message = 'Label deleted successfully'
+        message = _('Label deleted successfully')
         self.get_crud_assert(get_response, post_response, message)
         with self.assertRaises(ObjectDoesNotExist):
             Label.objects.get(name='urgently')
@@ -52,7 +53,7 @@ class LabelsTestCase(MixinTestCase):
         url = reverse_lazy('delete_label', args=(1,))
         get_response = self.user.get(url)
         post_response = self.user.post(url)
-        message = "Can't delete label because it's in use"
+        message = _("Can't delete label because it's in use")
         self.assertEqual(self.get_message(post_response), message)
         self.assertEquals(get_response.status_code, 200)
         self.assertEquals(post_response.status_code, 302)
@@ -62,6 +63,6 @@ class LabelsTestCase(MixinTestCase):
         url = reverse_lazy('labels_page')
         get_response = self.user_2.get(url)
         post_response = self.user_2.post(url)
-        message = 'You are not authorized! Please sign in.'
+        message = _('You are not authorized! Please sign in.')
         redirect_url = self.login_page
         self.get_permissions_assert(get_response, post_response, message, redirect_url)
