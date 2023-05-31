@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-27 15:51+0300\n"
+"POT-Creation-Date: 2023-05-31 18:03+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -105,6 +105,10 @@ msgstr "Невозможно удалить метку, потому что он
 #: task_manager/statuses/views.py:36
 msgid "Deleting a status"
 msgstr "Удаление статуса"
+
+#: task_manager/tasks/filter.py:9
+msgid "Label"
+msgstr "Метка"
 
 #: task_manager/tasks/filter.py:12
 msgid "Only your tasks"
@@ -271,7 +275,6 @@ msgid "User successfully registered"
 msgstr "Пользователь успешно зарегистрирован"
 
 #: task_manager/users/views.py:21
-#| msgid "Registration"
 msgid "Register"
 msgstr "Зарегистрировать"
 

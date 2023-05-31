@@ -6,7 +6,7 @@ from django.utils.translation import gettext_lazy as _
 
 
 class TaskFilter(django_filters.FilterSet):
-    labels = django_filters.ModelChoiceFilter(queryset=Label.objects.all())
+    labels = django_filters.ModelChoiceFilter(queryset=Label.objects.all(), label=_('Label'))
     autor = django_filters.BooleanFilter(field_name='autor',
                                          method='current_user',
                                          label=_('Only your tasks'),
