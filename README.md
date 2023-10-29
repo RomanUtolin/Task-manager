@@ -9,7 +9,7 @@ Task Manager - Task Manager is a task management system similar to http://www.re
 ### Install 
 
 ````
-git clone https://github.com/RomanUtolin/python-project-52.git
+git@github.com:RomanUtolin/Task-manager.git
 ````
 ````
 add '.env' in the root directory of your project
